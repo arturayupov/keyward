@@ -1,8 +1,8 @@
-# keykeeper — Design Spec
+# keyward — Design Spec
 
 **Date:** 2026-06-21
 **Status:** Approved for implementation planning
-**Working name:** `keykeeper` (final name TBD — see §10)
+**Name:** `keyward` (decided — brandable, free on GitHub + npm; SEO via description/topics/README)
 
 ---
 
@@ -10,7 +10,7 @@
 
 AI coding agents (Claude Code, Cursor, Gemini CLI, Windsurf, Cline, …) constantly need API keys and tokens — and today the human fumbles: hunting through scattered `.env` files, pasting secrets into chat (where they leak into context and transcripts), or re-entering the same key across every new session, project, IDE, and machine.
 
-Existing secret managers (envchain, pass, sops, Infisical, 1Password CLI) solve *encrypted storage*. **None of them provide an agent-facing broker with per-request, out-of-band human approval.** That gap is what keykeeper fills.
+Existing secret managers (envchain, pass, sops, Infisical, 1Password CLI) solve *encrypted storage*. **None of them provide an agent-facing broker with per-request, out-of-band human approval.** That gap is what keyward fills.
 
 ## 2. One-line
 
@@ -38,7 +38,7 @@ A local, encrypted, **agent-facing secret broker**: any AI tool requests a *name
         │  request_key("SHOPIFY_API_KEY", ns="shopify/livo", target="./.env")
         ▼
    ┌────────────────────────────────────────────┐
-   │  keykeeper  (single Go binary)              │
+   │  keyward  (single Go binary)              │
    │                                             │
    │  ① Vault    age-encrypted file;             │
    │             master key in OS keystore       │
@@ -58,7 +58,7 @@ Three concerns are deliberately separated so each can vary independently (and so
 
 ## 5. Components & data model
 
-### Storage layout (`~/.keykeeper/`)
+### Storage layout (`~/.keyward/`)
 | File | Purpose |
 |---|---|
 | `vault.age` | age-encrypted secrets blob; decrypted only in memory |
@@ -87,7 +87,7 @@ Secret {
 
 ## 6. Interfaces
 
-### 6.1 MCP server (`keykeeper serve-mcp`)
+### 6.1 MCP server (`keyward serve-mcp`)
 Exposed tools — **values never appear in any tool result**:
 
 - `list_keys(namespace?: string, query?: string)` → `[{ name, namespace, tags }]`
@@ -101,27 +101,27 @@ Exposed tools — **values never appear in any tool result**:
 
 ### 6.2 CLI
 ```
-keykeeper init                       # create vault, generate+store master key
-keykeeper import [path]              # scan .env files under path → vault, grouped by namespace
-keykeeper add NAME --ns NS           # add a secret (value via prompt or stdin, never argv)
-keykeeper ls [--ns NS]               # list names + namespaces (no values)
-keykeeper inject NAME --ns NS --into ./.env   # human-driven inject (still triggers approval unless --yes in a TTY)
-keykeeper get NAME --ns NS           # print value to stdout — gated, requires interactive confirm; for human use only
-keykeeper audit [--tail N]           # show decision log
-keykeeper serve-mcp                  # run the MCP server (stdio)
-keykeeper watch                      # optional: foreground approval queue for headless/daemon use
+keyward init                       # create vault, generate+store master key
+keyward import [path]              # scan .env files under path → vault, grouped by namespace
+keyward add NAME --ns NS           # add a secret (value via prompt or stdin, never argv)
+keyward ls [--ns NS]               # list names + namespaces (no values)
+keyward inject NAME --ns NS --into ./.env   # human-driven inject (still triggers approval unless --yes in a TTY)
+keyward get NAME --ns NS           # print value to stdout — gated, requires interactive confirm; for human use only
+keyward audit [--tail N]           # show decision log
+keyward serve-mcp                  # run the MCP server (stdio)
+keyward watch                      # optional: foreground approval queue for headless/daemon use
 ```
 
 ## 7. Approval & security model (the keystone)
 
-- The approval dialog is fired by the **keykeeper process**, never rendered into the agent's token stream. The agent therefore **cannot** click it or read its result.
+- The approval dialog is fired by the **keyward process**, never rendered into the agent's token stream. The agent therefore **cannot** click it or read its result.
 - Dialog content: requesting tool (best-effort identification), key name, namespace, **target path**, reason string. Buttons: **Approve once · Approve for session · Deny**.
 - "Approve for session" caches an approval for `{tool, namespace}` for a configurable TTL (default 30 min) held **in memory only**.
 - v0 native dialog backends (built-in, no heavy deps):
   - macOS → `osascript -e 'display dialog …'`
   - Windows → PowerShell `System.Windows.MessageBox`
   - Linux → `zenity` / `kdialog`, else terminal prompt
-  - Headless / no GUI → `keykeeper watch` terminal queue, or fail-closed.
+  - Headless / no GUI → `keyward watch` terminal queue, or fail-closed.
 - **Invariants (must hold, will be tested):**
   1. A secret value is never returned by any MCP tool.
   2. A secret value is never written to `audit.jsonl` or any log.
@@ -137,7 +137,7 @@ keykeeper watch                      # optional: foreground approval queue for h
 
 ## 9. Part 1 integration — importing the user's existing keys
 
-`keykeeper import ~/` (or a given root):
+`keyward import ~/` (or a given root):
 1. Walk for `.env` / `*.env` files, skipping `node_modules`, IDE/extension dirs, archives, and `.example`/`.template` files.
 2. Parse `KEY=VALUE`; derive `namespace` from the project path (e.g. `~/livostyle/sync_config.env` → `livostyle`).
 3. Load into the vault. On name collisions across projects, keep per-namespace copies (no silent merge).
@@ -149,7 +149,7 @@ A pre-built inventory of the user's current keys (names + namespaces, no values)
 
 ## 10. Open questions
 
-- **Final name.** `keykeeper` is taken-ish in OSS. Candidates: `keyward`, `agentvault`, `gatekey`, `keybroker`. Decide before first public release; does not block internal build.
+- ~~**Final name.**~~ Resolved: **`keyward`** (free on GitHub + npm; `agentvault`/`keyper` were taken or collided in-category). Positioning, target queries, and pains captured in `docs/POSITIONING.md`.
 - **`target: "env"` mechanics.** Injecting into the *calling tool's* process env is transport-dependent; for stdio MCP the realistic v0 target is a file path the tool then sources. Confirm during planning whether `env` target is feasible per client or should be deferred.
 - **Tool identity.** How reliably can the MCP server identify the *requesting* tool for the dialog? v0: best-effort from MCP client info; never a security control, only a display hint.
 
