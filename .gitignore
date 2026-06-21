@@ -1,11 +1,12 @@
-!*.env.example
-# secrets / vault — never commit
-*.age
-*.env
-.env
-.keykeeper/
+# Build artifacts
+/bin/
 /dist/
 /keyward
-audit.jsonl
 cmd/keyward/keyward
-vault*
+
+# Secrets — never commit real env files or vault data
+*.age
+*.env
+!*.env.example
+.keyward/
+audit.jsonl
