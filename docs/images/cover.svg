@@ -1,0 +1,55 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7c948"/>
+      <stop offset="1" stop-color="#f0932b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f0932b" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#f0932b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <!-- faint grid -->
+  <g stroke="#ffffff" stroke-opacity="0.03">
+    <path d="M0 160H1280M0 320H1280M0 480H1280"/>
+    <path d="M320 0V640M640 0V640M960 0V640"/>
+  </g>
+  <ellipse cx="960" cy="320" rx="380" ry="340" fill="url(#glow)"/>
+
+  <!-- wordmark -->
+  <text x="96" y="300" font-size="124" font-weight="700" fill="#ffffff" letter-spacing="-3">keyward</text>
+  <rect x="100" y="330" width="300" height="6" rx="3" fill="url(#amber)"/>
+
+  <!-- tagline -->
+  <text x="100" y="392" font-size="40" font-weight="500" fill="#c9d1d9">a secret broker for AI agents</text>
+
+  <!-- flow line, monospace -->
+  <text x="100" y="468" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="25" fill="#8b949e">
+    <tspan fill="#79c0ff">request_key</tspan>  <tspan fill="#8b949e">&#8594;</tspan>  approve  <tspan fill="#8b949e">&#8594;</tspan>  <tspan fill="#5ee6a8">injected &#10003;</tspan>
+  </text>
+  <text x="100" y="512" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#6e7681">the model never sees the value</text>
+
+  <!-- emblem: key + shield/lock with check -->
+  <g transform="translate(958 300)">
+    <circle r="150" fill="#0d1117" stroke="#21262d" stroke-width="2"/>
+    <!-- key bow -->
+    <circle cx="-36" cy="-36" r="46" fill="none" stroke="url(#amber)" stroke-width="16"/>
+    <circle cx="-36" cy="-36" r="16" fill="#0d1117"/>
+    <!-- key shaft -->
+    <rect x="-8" y="-8" width="150" height="16" rx="8" fill="url(#amber)" transform="rotate(45 -8 0)"/>
+    <rect x="78" y="60" width="34" height="16" rx="6" fill="url(#amber)" transform="rotate(45 78 68)"/>
+    <rect x="100" y="82" width="26" height="16" rx="6" fill="url(#amber)" transform="rotate(45 100 90)"/>
+    <!-- approval check badge -->
+    <circle cx="74" cy="-74" r="34" fill="#1a7f37" stroke="#0d1117" stroke-width="4"/>
+    <path d="M60 -74 L71 -62 L90 -86" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- footer -->
+  <text x="100" y="586" font-size="21" fill="#6e7681">Local &#183; encrypted &#183; MCP + CLI &#183; macOS &#183; Windows &#183; Linux</text>
+</svg>
