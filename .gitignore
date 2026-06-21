@@ -1,0 +1,8 @@
+# secrets / vault — never commit
+*.age
+vault*
+.keykeeper/
+audit.jsonl
+.env
+*.env
+!*.env.example
