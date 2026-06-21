@@ -13,7 +13,7 @@ func TestImportWalksAndNamespaces(t *testing.T) {
 		_ = os.MkdirAll(filepath.Dir(p), 0o755)
 		_ = os.WriteFile(p, []byte(body), 0o600)
 	}
-	mk("livo/.env", "SHOPIFY_TOKEN=abc\n")
+	mk("shop-app/.env", "SHOPIFY_TOKEN=abc\n")
 	mk("alice/.env", "OPENAI_API_KEY=xyz\n")
 	mk("alice/node_modules/pkg/.env", "IGNORED=1\n") // must be skipped
 	mk("alice/.env.example", "OPENAI_API_KEY=\n")    // must be skipped
@@ -26,7 +26,7 @@ func TestImportWalksAndNamespaces(t *testing.T) {
 	for _, s := range secs {
 		byNS[s.Namespace+"/"+s.Name] = s.Value
 	}
-	if byNS["livo/SHOPIFY_TOKEN"] != "abc" || byNS["alice/OPENAI_API_KEY"] != "xyz" {
+	if byNS["shop-app/SHOPIFY_TOKEN"] != "abc" || byNS["alice/OPENAI_API_KEY"] != "xyz" {
 		t.Fatalf("unexpected import: %+v", byNS)
 	}
 	if len(secs) != 2 {

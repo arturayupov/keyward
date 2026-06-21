@@ -35,7 +35,7 @@ A local, encrypted, **agent-facing secret broker**: any AI tool requests a *name
 
 ```
    AI tool (Claude Code / Cursor / Gemini CLI / …)
-        │  request_key("SHOPIFY_API_KEY", ns="shopify/livo", target="./.env")
+        │  request_key("SHOPIFY_API_KEY", ns="shopify/acme-shop", target="./.env")
         ▼
    ┌────────────────────────────────────────────┐
    │  keyward  (single Go binary)              │
@@ -75,7 +75,7 @@ The vault's **age identity (master key)** is stored in the OS keystore via `go-k
 Secret {
   name           string      // e.g. "SHOPIFY_API_KEY"
   value          string      // never serialized to logs / stdout / MCP results
-  namespace      string      // "shopify/livo", "ai/gemini", ...
+  namespace      string      // "shopify/acme-shop", "ai/gemini", ...
   tags           []string
   allowed_targets []string   // optional glob allowlist, e.g. ["**/.env", "env"]
   created_at      time
@@ -97,7 +97,7 @@ Exposed tools — **values never appear in any tool result**:
   - Flow: resolve → policy check → **fire approval dialog** → on approve, inject → return `{ status: "injected", name, target }`. On deny/timeout: `{ status: "denied" }`.
   - **Return payload never contains the value.**
 
-(Optional v0 helper, include if cheap: `suggest_keys(context)` — fuzzy-match a free-text need like "I need the Shopify token for livo" to candidate `{name, namespace}` pairs, still values-free.)
+(Optional v0 helper, include if cheap: `suggest_keys(context)` — fuzzy-match a free-text need like "I need the Shopify token for acme-shop" to candidate `{name, namespace}` pairs, still values-free.)
 
 ### 6.2 CLI
 ```
@@ -139,7 +139,7 @@ keyward watch                      # optional: foreground approval queue for hea
 
 `keyward import ~/` (or a given root):
 1. Walk for `.env` / `*.env` files, skipping `node_modules`, IDE/extension dirs, archives, and `.example`/`.template` files.
-2. Parse `KEY=VALUE`; derive `namespace` from the project path (e.g. `~/livostyle/sync_config.env` → `livostyle`).
+2. Parse `KEY=VALUE`; derive `namespace` from the project path (e.g. `~/acme-shop/sync_config.env` → `acme-shop`).
 3. Load into the vault. On name collisions across projects, keep per-namespace copies (no silent merge).
 4. Print a summary (names + namespaces only) and **offer** to delete or `chmod 600` the loose source files afterward — never automatic.
 

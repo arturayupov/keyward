@@ -10,3 +10,6 @@ cmd/keyward/keyward
 !*.env.example
 .keyward/
 audit.jsonl
+
+# macOS
+.DS_Store
