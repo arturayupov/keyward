@@ -3,6 +3,7 @@ package envfile
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -26,7 +27,9 @@ func TestSetCreatesFile0600(t *testing.T) {
 		t.Fatal(err)
 	}
 	info, _ := os.Stat(p)
-	if info.Mode().Perm() != 0o600 {
+	// Unix mode bits aren't honored on Windows (files report -rw-rw-rw-);
+	// ACL-based hardening on Windows is a v1 item.
+	if runtime.GOOS != "windows" && info.Mode().Perm() != 0o600 {
 		t.Fatalf("perm = %v", info.Mode().Perm())
 	}
 	m, _ := ParseFile(p)

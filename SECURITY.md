@@ -40,6 +40,10 @@ secret values** but trusted to run in your environment.
   Release binaries are code-signed/notarized to minimize this.
 - **Linux** requires a Secret Service (libsecret) provider; see
   [INSTALL.md](INSTALL.md).
+- **Windows file permissions.** keyward writes target files with `0600`, but
+  Windows does not honor Unix mode bits — files inherit parent-folder ACLs.
+  ACL-based hardening of injected files on Windows is a v1 item; keep injected
+  `.env` files in directories only your user can read.
 
 ## Reporting a vulnerability
 
