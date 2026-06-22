@@ -61,13 +61,35 @@ keyward import ~/projects
 #    "use my STRIPE_KEY for this project" → approve the prompt → done
 ```
 
-**Claude Code MCP config** (`~/.claude.json` or project `.mcp.json`):
+### Use it as an MCP server
+
+keyward is a standard **stdio MCP server**, registered the same way as the
+official MCP servers. Two steps:
+
+**1. Install the binary** (once) — `go install` above, or Homebrew/Scoop (soon),
+or a [release](https://github.com/arturayupov/keyward/releases) binary.
+
+**2. Register it with your AI tool:**
+
+```bash
+# Claude Code — one command:
+claude mcp add keyward -- keyward serve-mcp
+```
+
+Or add it to the config by hand (`~/.claude.json`, or a project `.mcp.json`):
 
 ```json
 { "mcpServers": { "keyward": { "command": "keyward", "args": ["serve-mcp"] } } }
 ```
 
-Cursor, Windsurf, Cline, and other MCP clients use the same `command`/`args` shape. Full walkthrough in [USAGE.md](USAGE.md).
+Cursor, Windsurf, Cline, and other MCP clients use the same `command`/`args`
+shape in their MCP settings. Restart the tool and ask it to use a key by name.
+
+> **Why not "paste a repo URL"?** No MCP client auto-installs a server from a
+> GitHub link — by design, clients won't run arbitrary remote code. keyward is
+> also intentionally **local** (it needs your OS keystore and writes to your
+> local files), so it isn't a remote/hosted URL server. The two steps above are
+> the standard, secure install path. Full walkthrough in [USAGE.md](USAGE.md).
 
 ## CLI reference
 
