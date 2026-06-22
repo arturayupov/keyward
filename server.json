@@ -1,0 +1,12 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.arturayupov/keyward",
+  "title": "keyward",
+  "description": "Local, encrypted secret broker for AI agents. AI tools request an API key by name over MCP; the human approves in a native OS dialog; only that key is injected into the project — the model never sees the value.",
+  "version": "0.1.1",
+  "websiteUrl": "https://github.com/arturayupov/keyward",
+  "repository": {
+    "url": "https://github.com/arturayupov/keyward",
+    "source": "github"
+  }
+}
