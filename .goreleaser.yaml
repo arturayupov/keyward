@@ -28,6 +28,30 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
+homebrew_casks:
+  - name: keyward
+    repository:
+      owner: arturayupov
+      name: homebrew-tap
+    homepage: "https://github.com/arturayupov/keyward"
+    description: "Local, encrypted secret broker for AI agents (MCP server + CLI)"
+    license: "MIT"
+    commit_author:
+      name: goreleaser-bot
+      email: goreleaser@users.noreply.github.com
+
+scoops:
+  - name: keyward
+    repository:
+      owner: arturayupov
+      name: scoop-bucket
+    homepage: "https://github.com/arturayupov/keyward"
+    description: "Local, encrypted secret broker for AI agents (MCP server + CLI)"
+    license: MIT
+    commit_author:
+      name: goreleaser-bot
+      email: goreleaser@users.noreply.github.com
+
 release:
   draft: false # public project; releases are published
 
