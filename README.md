@@ -99,7 +99,7 @@ These invariants are enforced by automated tests. Details and threat model in [S
 | MCP server for AI tools | ✅ | ❌ | ❌ | ❌ |
 | Open source | ✅ (MIT) | ✅ | ✅ | ❌ |
 
-The encrypted-storage problem is solved; keyward adds the missing **agent-facing, approval-gated broker** on top.
+The encrypted-storage problem is solved; keyward adds the missing **agent-facing, approval-gated broker** on top. See [docs/comparisons](docs/comparisons/) for honest long-form comparisons (including when each alternative is the better choice).
 
 ## Roadmap
 
