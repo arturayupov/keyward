@@ -29,7 +29,7 @@ checksum:
   name_template: "checksums.txt"
 
 release:
-  draft: true # never auto-publish; flipped manually after review
+  draft: false # public project; releases are published
 
 changelog:
   use: github
