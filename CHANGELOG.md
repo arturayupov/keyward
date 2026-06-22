@@ -18,6 +18,19 @@ All notable changes to keyward are documented here. The format is based on
 - Friendly guidance when the OS keystore is unreachable.
 - CI matrix (ubuntu/macos/windows), goreleaser config, Makefile.
 
+### Fixed
+- Multi-line and special-character secret values (PEM keys, service-account
+  JSON, values with quotes/backslashes/`#`) now round-trip through `.env`
+  injection intact instead of corrupting the file.
+- Vault writes are atomic (temp file + rename) — an interrupted write can no
+  longer truncate or corrupt an existing vault.
+- Import now also picks up `.env.local` / `.env.production` / `.env.*` files.
+
 ### Security
 - Automated invariant tests asserting secret values never appear in logs,
   `ls` output, MCP results, or the broker `Result`.
+- Concurrent `request_key` injections into the same target file are serialized.
+
+### Docs
+- [ROADMAP.md](ROADMAP.md) — versioned plan (v0.2 distribution, v1.0 control,
+  v2.0 multi-device/teams).

@@ -103,8 +103,11 @@ The encrypted-storage problem is solved; keyward adds the missing **agent-facing
 
 ## Roadmap
 
-- v1: biometric approval (Touch ID / Windows Hello), tray/menubar app, per-key policy rules, key rotation reminders.
-- v2: encrypted multi-device sync (user-owned backend), team mode.
+Full detail in [ROADMAP.md](ROADMAP.md). Highlights:
+
+- **v0.2** — signed/notarized binaries (no keystore prompt), Homebrew/Scoop, biometric approval (Touch ID / Windows Hello), Windows ACL hardening.
+- **v1.0** — tray/menubar app, per-key policy & allowlists, rotation reminders, `target: "env"` injection.
+- **v2.0** — encrypted multi-device sync (user-owned backend), team mode.
 
 ## Contributing
 
