@@ -21,6 +21,13 @@ Requires Go 1.22+.
 - **Format & vet.** `gofmt -w .` and `go vet ./...` must be clean.
 - **Cross-platform.** Approval dialogs are per-OS behind build tags
   (`internal/approval/dialog_*.go`); verify `make cross` still builds all three.
+  To verify a dialog **renders and parses correctly on your OS**, run the manual
+  GUI test (excluded from CI):
+  ```bash
+  go test -tags manual -run TestLiveApprovalDialog ./internal/approval/ -v
+  ```
+  It pops the real native dialog; Approve must inject into the target, Deny must
+  write nothing. Verified on macOS — Windows/Linux confirmation welcome.
 - Small, focused PRs with a clear description. One concern per PR.
 
 ## Architecture
