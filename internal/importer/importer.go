@@ -49,10 +49,11 @@ func Import(root string) ([]model.Secret, error) {
 }
 
 func isEnvFile(name string) bool {
-	if strings.Contains(name, ".example") || strings.Contains(name, ".template") {
+	if strings.Contains(name, ".example") || strings.Contains(name, ".template") || strings.Contains(name, ".sample") {
 		return false
 	}
-	return name == ".env" || strings.HasSuffix(name, ".env")
+	// .env, .env.local, .env.production, ...  and  foo.env
+	return name == ".env" || strings.HasPrefix(name, ".env.") || strings.HasSuffix(name, ".env")
 }
 
 func namespaceFor(root, path string) string {

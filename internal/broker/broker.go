@@ -2,6 +2,7 @@ package broker
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/arturayupov/keyward/internal/approval"
 	"github.com/arturayupov/keyward/internal/audit"
@@ -17,6 +18,8 @@ type Broker struct {
 	Store    *model.Store
 	Approver approval.Approver
 	Audit    *audit.Logger
+
+	injectMu sync.Mutex // serializes target-file read-modify-write across concurrent requests
 }
 
 // Result is intentionally value-free.
@@ -41,7 +44,10 @@ func (b *Broker) Request(r approval.Request) (Result, error) {
 		_ = b.Audit.Record(audit.Entry{Tool: r.Tool, Name: r.Name, Namespace: r.Namespace, Target: r.Target, Decision: "denied"})
 		return Result{Status: "denied", Name: r.Name, Target: r.Target}, nil
 	}
-	if err := envfile.Set(r.Target, sec.Name, sec.Value); err != nil {
+	b.injectMu.Lock()
+	err = envfile.Set(r.Target, sec.Name, sec.Value)
+	b.injectMu.Unlock()
+	if err != nil {
 		return Result{}, err
 	}
 	decision := "approved_once"

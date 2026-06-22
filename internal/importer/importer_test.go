@@ -14,7 +14,7 @@ func TestImportWalksAndNamespaces(t *testing.T) {
 		_ = os.WriteFile(p, []byte(body), 0o600)
 	}
 	mk("shop-app/.env", "SHOPIFY_TOKEN=abc\n")
-	mk("alice/.env", "OPENAI_API_KEY=xyz\n")
+	mk("alice/.env.local", "OPENAI_API_KEY=xyz\n")   // .env.local must be imported
 	mk("alice/node_modules/pkg/.env", "IGNORED=1\n") // must be skipped
 	mk("alice/.env.example", "OPENAI_API_KEY=\n")    // must be skipped
 

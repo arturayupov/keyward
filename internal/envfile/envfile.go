@@ -26,9 +26,7 @@ func Parse(b []byte) (map[string]string, error) {
 		}
 		k = strings.TrimSpace(k)
 		v = strings.TrimSpace(v)
-		if len(v) >= 2 && (v[0] == '"' || v[0] == '\'') && v[len(v)-1] == v[0] {
-			v = v[1 : len(v)-1]
-		}
+		v = unquote(v)
 		out[k] = v
 	}
 	return out, sc.Err()
@@ -70,9 +68,28 @@ func Set(path, key, value string) error {
 	return os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0o600)
 }
 
+// quote renders a value for a single .env line. Values with whitespace, quotes,
+// '#', or newlines are double-quoted with \", \\, and \n escaped, so a value
+// (including a multi-line PEM key) round-trips through Parse unchanged.
 func quote(v string) string {
-	if strings.ContainsAny(v, " \t\"'#") {
-		return `"` + strings.ReplaceAll(v, `"`, `\"`) + `"`
+	if !strings.ContainsAny(v, " \t\"'#\n\r\\") {
+		return v
 	}
-	return v
+	r := strings.NewReplacer(`\`, `\\`, `"`, `\"`, "\n", `\n`, "\r", `\r`)
+	return `"` + r.Replace(v) + `"`
+}
+
+// unquote reverses quote: it strips matching surrounding quotes and, for
+// double-quoted values, unescapes \\, \", \n, and \r.
+func unquote(v string) string {
+	if len(v) < 2 || v[0] != v[len(v)-1] || (v[0] != '"' && v[0] != '\'') {
+		return v
+	}
+	inner := v[1 : len(v)-1]
+	if v[0] == '\'' {
+		return inner // single quotes are literal
+	}
+	// Single pass, no rescanning: \\ is tried before the others, so an escaped
+	// backslash is consumed whole and never re-interpreted.
+	return strings.NewReplacer(`\\`, `\`, `\"`, `"`, `\n`, "\n", `\r`, "\r").Replace(inner)
 }
