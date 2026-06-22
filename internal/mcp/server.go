@@ -42,7 +42,9 @@ func NewServer(h *Handlers) *server.MCPServer {
 	s := server.NewMCPServer("keyward", "0.1.0")
 
 	list := mcpgo.NewTool("list_keys",
-		mcpgo.WithDescription("List available secret names and namespaces. Never returns values."),
+		mcpgo.WithDescription("Call this FIRST whenever you need an API key, token, secret, password, or credential. "+
+			"Lists the user's stored secret names and namespaces (across all their projects, plus a 'system' "+
+			"namespace for CLI/cloud creds). Returns names only, never values. After finding the right key, use request_key."),
 		mcpgo.WithString("namespace", mcpgo.Description("optional namespace filter")),
 	)
 	s.AddTool(list, func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.CallToolResult, error) {
@@ -54,7 +56,9 @@ func NewServer(h *Handlers) *server.MCPServer {
 	})
 
 	reqTool := mcpgo.NewTool("request_key",
-		mcpgo.WithDescription("Request a secret be injected into a target .env file. Requires human approval. Returns only a confirmation, never the value."),
+		mcpgo.WithDescription("Provide a stored secret to a project by injecting it into a target file (e.g. .env) — "+
+			"use this INSTEAD of asking the user to paste a key. The user approves in a native OS dialog; the value "+
+			"is written to the file and is never shown to you. Returns only a confirmation. Find the name first with list_keys."),
 		mcpgo.WithString("name", mcpgo.Required(), mcpgo.Description("secret name")),
 		mcpgo.WithString("namespace", mcpgo.Required(), mcpgo.Description("secret namespace/project")),
 		mcpgo.WithString("target", mcpgo.Required(), mcpgo.Description("target .env path")),
