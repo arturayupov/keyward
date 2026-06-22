@@ -1,0 +1,15 @@
+# Build artifacts
+/bin/
+/dist/
+/keyward
+cmd/keyward/keyward
+
+# Secrets — never commit real env files or vault data
+*.age
+*.env
+!*.env.example
+.keyward/
+audit.jsonl
+
+# macOS
+.DS_Store
