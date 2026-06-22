@@ -43,10 +43,18 @@ AI tool ──request_key("STRIPE_KEY", project)──▶ keyward ──native a
 ## Install
 
 ```bash
+# Homebrew (macOS / Linux)
+brew install arturayupov/tap/keyward
+
+# Scoop (Windows)
+scoop bucket add arturayupov https://github.com/arturayupov/scoop-bucket
+scoop install keyward
+
+# Go
 go install github.com/arturayupov/keyward/cmd/keyward@latest
 ```
 
-Pre-built binaries (macOS/Windows/Linux, amd64+arm64) are attached to each [release](https://github.com/arturayupov/keyward/releases). Homebrew and Scoop coming soon. See [INSTALL.md](INSTALL.md) for per-OS notes (incl. Linux libsecret) and [TROUBLESHOOTING.md](TROUBLESHOOTING.md) if something doesn't work.
+Pre-built binaries (macOS/Windows/Linux, amd64+arm64) are also attached to each [release](https://github.com/arturayupov/keyward/releases). See [INSTALL.md](INSTALL.md) for per-OS notes (incl. Linux libsecret) and [TROUBLESHOOTING.md](TROUBLESHOOTING.md) if something doesn't work.
 
 ## Quickstart
 

@@ -15,7 +15,7 @@ with no website/domain**. Items needing a live site or a public repo are marked
 - [x] `README.md` optimized for primary keywords (headings/body)
 - [x] `SECURITY.md` (doubles as security disclosure surface)
 - [ ] 🔒 GATED: JSON-LD schema, sitemap, robots, IndexNow, security.txt — require a website/domain
-- [ ] 🔒 GATED: GitHub social-preview image upload (manual; Settings → Social preview → docs/images/cover.png)
+- [ ] GitHub social-preview upload (manual; Settings → Social preview → docs/images/cover.png)
 
 ## Phase 2 — AI-discovery layer
 - [x] MCP server (keyward *is* one — `serve-mcp`)
@@ -29,7 +29,7 @@ with no website/domain**. Items needing a live site or a public repo are marked
 
 ## Phase 4 — Directory / list submissions (copy ready, submission GATED on public)
 - [x] Paste-ready copy written (`docs/business/launch-checklist.md`)
-- [ ] 🔒 awesome-mcp, awesome-go, MCP registry
+- [x] awesome-mcp PR opened (punkpeye/awesome-mcp-servers#8509); MCP registry server.json ready (publish = user `mcp-publisher login github`)
 - [ ] 🔒 AlternativeTo, LibHunt, SaaSHub
 - [ ] 🔒 Product Hunt (draft only until traction)
 

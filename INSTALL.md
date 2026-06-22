@@ -19,13 +19,20 @@ tar -xzf keyward_*_darwin_arm64.tar.gz
 sudo mv keyward /usr/local/bin/
 ```
 
-## Homebrew / Scoop
-
-_Coming soon._
+## Homebrew (macOS / Linux)
 
 ```bash
-# brew install arturayupov/tap/keyward   (planned)
-# scoop install keyward                   (planned)
+brew install arturayupov/tap/keyward
+```
+
+The Homebrew cask installs a signed-free binary and clears the macOS quarantine
+attribute automatically, so it runs without a Gatekeeper prompt.
+
+## Scoop (Windows)
+
+```bash
+scoop bucket add arturayupov https://github.com/arturayupov/scoop-bucket
+scoop install keyward
 ```
 
 ## Build from source
