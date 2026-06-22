@@ -16,7 +16,7 @@ func newRootCmd() *cobra.Command {
 		Short:   "A local secret broker for AI agents",
 		Version: version,
 	}
-	root.AddCommand(newInitCmd(), newImportCmd(), newLsCmd(), newInjectCmd(), newServeCmd())
+	root.AddCommand(newInitCmd(), newImportCmd(), newAddCmd(), newLsCmd(), newInjectCmd(), newServeCmd())
 	return root
 }
 

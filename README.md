@@ -105,6 +105,7 @@ shape in their MCP settings. Restart the tool and ask it to use a key by name.
 |---|---|
 | `keyward init` | Create the encrypted vault and master key |
 | `keyward import [root]` | Import secrets from `.env` files under `root`, grouped by project |
+| `keyward add NAME --ns NS` | Add/update one secret, value read from stdin (for non-`.env` creds) |
 | `keyward ls [--ns NS]` | List key names and namespaces (**never values**) |
 | `keyward inject NAME --ns NS --into PATH` | Inject one key into a target env file (prompts for approval) |
 | `keyward serve-mcp` | Run the MCP server over stdio |

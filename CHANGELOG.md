@@ -7,6 +7,9 @@ All notable changes to keyward are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `keyward add NAME --ns NS` — add or update a single secret with the value read
+  from stdin (so it never appears in argv or shell history), for credentials that
+  don't live in `.env` files (CLI tokens, gcloud, npm, etc.).
 - Encrypted vault (`age`) with the master key stored in the OS keystore
   (macOS Keychain / Windows Credential Manager / Linux libsecret).
 - `keyward init` / `import` / `ls` / `inject` / `serve-mcp` CLI.
