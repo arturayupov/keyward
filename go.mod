@@ -4,7 +4,7 @@ go 1.26.4
 
 require (
 	filippo.io/age v1.3.1
-	github.com/mark3labs/mcp-go v0.55.0
+	github.com/mark3labs/mcp-go v0.55.1
 	github.com/spf13/cobra v1.10.2
 	github.com/zalando/go-keyring v0.2.8
 )
